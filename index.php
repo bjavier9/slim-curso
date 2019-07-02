@@ -6,10 +6,22 @@ use Psr\Http\Message\ResponseInterface as Response;
 require_once "vendor/autoload.php";
 $app = new \Slim\App();
 
-$app->get('/test[/{name}]',function(Request $request,Response $response, Array $args) {
-    $limit = $request->getQueryParams()['limit']??10;
-    $name = $args['name']??'jajajaja';
-    return $response->getBody()->write("{$limit} hellow world {$name}");
+$app->post('/test',function(Request $request,Response $response, Array $args) {
+   $data = $request->getParsedBody();
+    $nombre = $data['nombre']??'';
+    return $response->getBody()->write("Producto {$nombre} (POST)");
 });
+
+$app->put('/test',function(Request $request,Response $response, Array $args) {
+    $data = $request->getParsedBody();
+     $nombre = $data['nombre']??'';
+     return $response->getBody()->write("Producto {$nombre} (PUT)");
+ });
+
+ $app->delete('/test',function(Request $request,Response $response, Array $args) {
+    $data = $request->getParsedBody();
+     $nombre = $data['nombre']??'';
+     return $response->getBody()->write("Producto {$nombre} (DELETE)");
+ });
 
 $app->run();
